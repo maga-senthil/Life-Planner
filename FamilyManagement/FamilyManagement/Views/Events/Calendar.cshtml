@@ -1,0 +1,54 @@
+﻿@model IEnumerable<FamilyManagement.Models.Events>
+
+@{
+    ViewBag.Title = "Calendar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Home Page</title>
+</head>
+<body class="bg" background="~/Content/503132200.jpg" style="background-repeat: no-repeat;background-size: cover;">
+
+        <br />
+        <br />
+        <h2>Event Calendar</h2>
+
+        <br />
+        <br />
+
+
+        <div class="col-md-10">
+            <div id="calendar">
+
+            </div>
+        </div>
+
+        @section scripts{
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+             $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay',
+                        borderColor: 'Black'
+                    },
+                    eventClick: function() {
+                        alert('a day has been clicked!');
+                    },
+                    events:@Html.Raw(Json .Encode(Model)),
+                    error: function(xhr, status, error) {
+                                alert(xhr.responseText);
+                            }
+                        });
+                });
+
+            </script>
+        }
+
+   
+</body>
+</html>

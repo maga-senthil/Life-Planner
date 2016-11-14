@@ -1,0 +1,19 @@
+﻿@model FamilyManagement.Models.DailyExpense
+@{
+    ViewBag.Title = "MonthlyChart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MonthlyChart</h2>
+
+
+@using WebMatrix.Data;
+@{
+            var db = Database.Open("FamilyManagement");
+            var data = db.Query("SELECT CategoryName,BudgetAmount,ActualAmount from Categories,MonthlyBudgets where CategoryId= Categories.Id ");
+            //var data = db.Query("SELECT CategoryId,BudgetAmount,ActualAmount FROM MonthlyBudgets");
+            var myChart = new Chart(width: 600, height: 400, theme: ChartTheme.Green)
+                .AddTitle("MonthlyReport")
+                .DataBindTable(dataSource: data, xField: "CategoryName")
+                .Write();
+}

@@ -1,0 +1,51 @@
+﻿@model FamilyManagement.Models.DailyChore
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DailyChore</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Chore.Chores)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Chore.Chores)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Family.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Family.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ChoreDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ChoreDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Done)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Done)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

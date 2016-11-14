@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNet.Identity
+@if(Request.IsAuthenticated && User.IsInRole("Adult"))
+{
+    <ul class="nav navbar-nav navbar-left">
+        <li>@Html.ActionLink("Budget", "CategoryView", "Categories")</li>
+        <li>@Html.ActionLink("Chores", "FamilyView", "Families")</li>
+        <li>@Html.ActionLink("Event Calendar", "Create", "Events")</li>
+        <li>@Html.ActionLink("Maintenance Schedule", "Create", "Maintanances")</li>
+        <li>@Html.ActionLink("Emergency Contact", "Create", "EmergencyContacts")</li>
+    </ul>
+ 
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+
+}
+else if (Request.IsAuthenticated && User.IsInRole("Nanny"))
+{
+    <ul class="nav navbar-nav navbar-left">
+        <li>@Html.ActionLink("Event Calendar", "Calendar", "Events")</li>
+        <li>@Html.ActionLink("Emergency Contact", "Result", "EmergencyContacts")</li>
+    </ul>
+
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+
+}
+else if (Request.IsAuthenticated && User.IsInRole("Child"))
+{
+    <ul class="nav navbar-nav navbar-left">
+        <li>@Html.ActionLink("Emergency Contact", "Result", "EmergencyContacts")</li>
+    </ul>
+
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+    }
+

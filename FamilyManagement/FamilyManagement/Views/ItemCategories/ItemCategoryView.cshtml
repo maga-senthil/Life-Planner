@@ -1,0 +1,122 @@
+﻿@model FamilyManagement.Models.ItemCategoryViewModel
+@{
+    ViewBag.Title = "ItemCategoryView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Home Page</title>
+    <link href="~/Content/sidebar.css" rel="stylesheet" />
+</head>
+<body class="bg" background="~/Content/503132200.jpg" style="background-repeat: no-repeat;background-size: cover;">
+
+    @*<body class="bg">*@
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        @*<a href="/Home/About">Main</a>*@
+        <a href="/Categories/CategoryView">Category</a>
+        <a href="/ItemCategories/ItemCategoryView">Item</a>
+        <a href="/MonthlyBudgets/MonthlyBudgetView">Monthly Budget</a>
+        <a href="/DailyExpenses/DailyExpenseView">Daily Expense</a>
+        <a href="/DailyExpenses/MonthlyBudgetSearch">Monthly Budget Search</a>
+        <a href="/DailyExpenses/ChartView">Chart</a>
+
+    </div>
+
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+        <h2>Item</h2>
+
+        @using (Html.BeginForm("ItemCategoryView", "ItemCategories"))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <h5 class="col-md-2 control-label"><b>Category Name</b></h5>
+                    @*@Html.LabelFor(model => model.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <div class="col-md-10">
+                        @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ItemName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ItemName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="ADD NEW ITEM" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        @*<div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>*@
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+        @if (Model.ItemCategoryList != null)
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ItemName)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.ItemCategoryList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Categorys.CategoryName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+            @Html.ActionLink("MonthlyBudget", "MonthlyBudgetView", "MonthlyBudgets")
+
+        }
+    </div>
+    <script type="text/javascript">
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+    </script>
+
+
+</body>
+</html>
+

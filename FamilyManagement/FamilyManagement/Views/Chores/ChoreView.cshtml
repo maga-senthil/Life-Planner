@@ -1,0 +1,95 @@
+﻿@model FamilyManagement.Models.ChoreViewModel
+@{
+    ViewBag.Title = "ChoreView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Home Page</title>
+    <link href="~/Content/sidebar.css" rel="stylesheet" />
+</head>
+<body class="bg" background="~/Content/503132200.jpg" style="background-repeat: no-repeat;background-size: cover;">
+    @*<body class="bg">*@
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="/Families/FamilyView">Family</a>
+            <a href="/Chores/ChoreView">Chore</a>
+            <a href="/DailyChores/DailyChoreView">Daily Chores</a>
+            <a href="/DailyChores/SearchChore">Search</a>
+
+
+        </div>
+
+        <div id="main">
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+            <h2>Chore</h2>
+
+            @using (Html.BeginForm("ChoreView", "Chores"))
+            {
+                @*@Html.AntiForgeryToken()*@
+
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Chores, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Chores, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Chores, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="ADD NEW" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+                if (Model.ChoreList != null)
+                {
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Chores)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model.ChoreList)
+                    {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Chores)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                }
+
+            }
+
+ </div>
+ <script type="text/javascript">
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+            }
+
+        </script>
+
+
+    </body>
+</html>
+
+

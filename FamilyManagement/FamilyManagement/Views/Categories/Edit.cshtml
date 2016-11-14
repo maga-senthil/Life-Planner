@@ -1,0 +1,83 @@
+﻿@model FamilyManagement.Models.Category
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Home Page</title>
+    <link href="~/Content/sidebar.css" rel="stylesheet" />
+</head>
+
+<body class="bg" background="~/Content/503132200.jpg" style="background-repeat: no-repeat;background-size: cover;">
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        @*<a href="/Home/About">Main</a>*@
+        <a href="/Categories/CategoryView">Category</a>
+        <a href="/ItemCategories/ItemCategoryView">Item</a>
+        <a href="/MonthlyBudgets/MonthlyBudgetView">Monthly Budget</a>
+        <a href="/DailyExpenses/DailyExpenseView">Daily Expense</a>
+        <a href="/DailyExpenses/MonthlyBudgetSearch">Monthly Budget Search</a>
+        <a href="/DailyExpenses/ChartView">Chart</a>
+
+    </div>
+
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+        <h2>Edit Category</h2>
+        <br />
+        <h2></h2>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    <h5 class="col-md-2 control-label"><b>Category Name</b></h5>
+
+                    @*@Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "CategoryView", "Categories")
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+    </div>
+    <script type="text/javascript">
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+﻿
+@model FamilyManagement.Models.DailyChoreViewModel
+@{
+    ViewBag.Title = "DailyChoreView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Home Page</title>
+    <link href="~/Content/sidebar.css" rel="stylesheet" />
+</head>
+<body class="bg" background="~/Content/503132200.jpg" style="background-repeat: no-repeat;background-size: cover;">
+
+    @*<body class="bg">*@
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="/Families/FamilyView">Family</a>
+        <a href="/Chores/ChoreView">Chore</a>
+        <a href="/DailyChores/DailyChoreView">Daily Chores</a>
+        <a href="/DailyChores/SearchChore">Search</a>
+
+
+    </div>
+
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+        <h2>Daily Chores</h2>
+
+        @using (Html.BeginForm("DailyChoreView", "DailyChores"))
+        {
+            @*@Html.AntiForgeryToken()*@
+            @*@Html.HiddenFor(model => model.FamilyId)
+                @Html.HiddenFor(model => model.ChoreId)*@
+
+            <div class="form-horizontal">
+                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                <div class="form-group">
+                    <h5 class="col-md-2 control-label"><b>Name</b></h5>
+                    @*@Html.LabelFor(model => model.FamilyId, "FamilyId", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <div class="col-md-10">
+                        @Html.DropDownList("FamilyId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FamilyId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChoreId, "ChoreId", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("ChoreId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ChoreId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChoreDay, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ChoreDay, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ChoreDay, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Done, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Done)
+                            @Html.ValidationMessageFor(model => model.Done, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="ADD" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Model.dailychoredetail != null)
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Chores)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ChoreDay)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Done)
+                    </th>
+
+
+                </tr>
+
+                @foreach (var item in Model.dailychoredetail)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Chore.Chores)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Family.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChoreDay)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Done)
+                        </td>
+
+                        @*<td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </td>*@
+                    </tr>
+                }
+
+            </table>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Points)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Points)
+                </dd>
+                <dt></dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Amount)
+                </dd>
+            </dl>
+
+        }
+    </div>
+    <script type="text/javascript">
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+    </script>
+
+
+</body>
+</html>
+
+
+
